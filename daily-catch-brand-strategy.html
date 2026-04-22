@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Daily Catch — Brand Strategy Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f0e8;
+    --cream: #ede8da;
+    --accent: #c8471f;
+    --accent2: #2a5c45;
+    --gold: #c9a84c;
+    --muted: #7a7267;
+    --rule: #c8b89a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* MASTHEAD */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 60px 0 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 30px,
+      rgba(255,255,255,0.03) 30px,
+      rgba(255,255,255,0.03) 31px
+    );
+  }
+  .masthead-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    position: relative;
+  }
+  .masthead h1 span { color: var(--accent); }
+  .masthead-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    color: rgba(245,240,232,0.6);
+    margin-top: 16px;
+    font-weight: 300;
+  }
+  .masthead-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(245,240,232,0.4);
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  p { margin-bottom: 16px; color: #2a2620; }
+  p:last-child { margin-bottom: 0; }
+
+  /* INTRO BOX */
+  .intro-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px 48px;
+    margin: 48px 0;
+    position: relative;
+  }
+  .intro-box::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: var(--accent);
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    line-height: 1;
+    opacity: 0.6;
+  }
+  .intro-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--paper);
+    padding-left: 16px;
+  }
+
+  /* COMPETITOR GRID */
+  .competitor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .competitor-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 28px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .competitor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .comp-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .comp-type.direct { background: #fde8e3; color: var(--accent); }
+  .comp-type.indirect { background: #e3f0eb; color: var(--accent2); }
+  .comp-type.adjacent { background: #fef5e3; color: #7a5c00; }
+
+  .comp-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .comp-tagline {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .comp-facts {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    margin-top: 16px;
+  }
+  .comp-fact {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .comp-fact-label { color: var(--muted); font-weight: 500; }
+  .comp-fact-val { font-weight: 600; text-align: right; max-width: 55%; }
+
+  .gap-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin: 4px 4px 0 0;
+  }
+
+  /* PLATFORM TABLE */
+  .platform-section { margin-top: 32px; }
+  .platform-card {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 1fr;
+    border: 1px solid var(--rule);
+    margin-bottom: -1px;
+    background: white;
+    transition: background 0.15s;
+  }
+  .platform-card:hover { background: var(--cream); }
+  .platform-card.header {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .platform-card.tier-1 { border-left: 4px solid var(--accent); }
+  .platform-card.tier-2 { border-left: 4px solid var(--gold); }
+  .platform-card.tier-3 { border-left: 4px solid var(--rule); }
+
+  .pc { padding: 18px 20px; font-size: 14px; border-right: 1px solid var(--rule); }
+  .pc:last-child { border-right: none; }
+  .pc.name { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+  .pc-icon { font-size: 20px; }
+  .verdict {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .verdict.go { color: var(--accent2); }
+  .verdict.maybe { color: #9a6f00; }
+  .verdict.skip { color: #999; }
+
+  /* STARS */
+  .stars { color: var(--gold); letter-spacing: -2px; }
+
+  /* STRATEGY PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-top: 32px;
+  }
+  .pillar {
+    padding: 32px 28px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .pillar:nth-child(even) { background: var(--cream); }
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: rgba(200,71,31,0.12);
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    line-height: 1;
+  }
+  .pillar h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .pillar p { font-size: 13px; color: var(--muted); position: relative; }
+
+  /* CONTENT PLAYBOOK */
+  .playbook-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-bottom: -1px;
+  }
+  .pb-platform {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 24px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+  }
+  .pb-platform .pb-icon { font-size: 24px; margin-bottom: 4px; }
+  .pb-content { padding: 24px 28px; background: white; }
+  .pb-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pb-content p { font-size: 13px; }
+  .pb-tags { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pb-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--rule);
+    padding: 3px 8px;
+    color: var(--muted);
+  }
+
+  /* BRAND IDENTITY BOX */
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .identity-card {
+    padding: 32px;
+    border: 1px solid var(--rule);
+  }
+  .identity-card.dark {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .identity-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .identity-card.dark .identity-label { color: var(--gold); }
+  .big-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .identity-card.dark .big-text { color: var(--paper); }
+
+  .tone-list { list-style: none; }
+  .tone-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .identity-card.dark .tone-list li { border-color: rgba(255,255,255,0.1); color: var(--paper); }
+  .tone-list li:last-child { border-bottom: none; }
+  .tone-bullet {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ROADMAP */
+  .roadmap { margin-top: 32px; position: relative; }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 59px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rule);
+  }
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .roadmap-period {
+    text-align: right;
+    padding-top: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: relative;
+  }
+  .roadmap-period::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    right: -30px;
+    top: 6px;
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .roadmap-body {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+  }
+  .roadmap-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .roadmap-body ul {
+    list-style: none;
+    padding: 0;
+  }
+  .roadmap-body ul li {
+    padding: 4px 0;
+    font-size: 13px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+  }
+  .roadmap-body ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  /* KPI BOX */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .kpi-box {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .kpi-icon { font-size: 24px; margin-bottom: 10px; }
+  .kpi-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .kpi-target {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .kpi-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(245,240,232,0.4);
+    text-align: center;
+    padding: 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 32px 0;
+  }
+  hr.ornament::before {
+    content: '— ◆ —';
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    letter-spacing: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .platform-card { grid-template-columns: 1fr 1fr; }
+    .platform-card.header .pc:nth-child(n+3) { display: none; }
+    .identity-grid { grid-template-columns: 1fr; }
+    .playbook-item { grid-template-columns: 80px 1fr; }
+    .roadmap-item { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-label">Confidential Strategy Document</div>
+    <h1>The Daily <span>Catch</span></h1>
+    <div class="masthead-sub">Competitor Research & Brand Growth Strategy · April 2026</div>
+    <div class="masthead-meta">
+      <span>PREPARED FOR HEXAGON TECHNOLOGIES</span>
+      <span>|</span>
+      <span>MARKET: GLOBAL / ENGLISH-SPEAKING</span>
+    </div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <div class="container">
+    <div class="section-label">00 — Overview</div>
+    <h2>The Opportunity</h2>
+    <p>The Daily Catch enters a crowded but largely <strong>newsletter-dominated</strong> space where the primary competitors live in email inboxes, not app stores. That is the key strategic opening: the app format is itself a differentiator. Users who have deleted their news apps because they create anxiety are not yet subscribed to a replacement. The Daily Catch can own that void.</p>
+    <p>The product's core promise — 5 stories, ~30 seconds each, no algorithms, no guilt — is genuinely distinctive and maps to a real cultural moment: widespread <em>news fatigue</em> combined with a desire to remain informed. The brand challenge is making that promise feel trustworthy, warm, and worth $0 of attention every morning.</p>
+
+    <div class="intro-box">
+      <p>Stay informed, not overwhelmed. In a world of infinite scroll, The Daily Catch is a deliberate choice — five stories, then you're done.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITOR ANALYSIS -->
+<section>
+  <div class="container">
+    <div class="section-label">01 — Competitive Landscape</div>
+    <h2>Who You're Up Against</h2>
+    <p>Competitors fall into three buckets: <strong>direct app competitors</strong> (same format, same channel), <strong>indirect newsletter competitors</strong> (same audience, different delivery), and <strong>adjacent platforms</strong> (news content in social formats).</p>
+
+    <div class="competitor-grid">
+
+      <div class="competitor-card">
+        <div class="comp-type direct">Direct — App</div>
+        <div class="comp-name">1440 Daily Digest</div>
+        <div class="comp-tagline">"15-minute read, 100+ sources"</div>
+        <p style="font-size:13px;">The closest rival. Curated daily briefing claiming zero bias. 4M+ newsletter subscribers, expanding into app. More voluminous than The Daily Catch — they go wider, you go shorter.</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Subscribers</span><span class="comp-fact-val">4M+</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Format</span><span class="comp-fact-val">15-min newsletter</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Tone</span><span class="comp-fact-val">Neutral/academic</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">5× faster, app-native</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">Too long</div><div class="gap-tag">No app focus</div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="comp-type indirect">Indirect — Newsletter</div>
+        <div class="comp-name">Morning Brew</div>
+        <div class="comp-tagline">"Business news for modern professionals"</div>
+        <p style="font-size:13px;">The dominant name in daily digest newsletters. Male-skewing (70/30), business/finance heavy. Known for witty, irreverent tone. Acquired by Business Insider. Not a neutral news source — has a clear professional media lens.</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Audience</span><span class="comp-fact-val">Millennial professionals</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Tone</span><span class="comp-fact-val">Witty, business-first</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">Gender-neutral, broader life impact focus</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">Niche (biz)</div><div class="gap-tag">Email only</div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="comp-type indirect">Indirect — Newsletter</div>
+        <div class="comp-name">theSkimm</div>
+        <div class="comp-tagline">"Make it easier to be smarter"</div>
+        <p style="font-size:13px;">5M+ subscribers, pioneered conversational news for millennial women. Acquired by Ziff Davis in March 2025. Strong brand loyalty but highly gendered. Covers wellness & lifestyle beyond hard news. Runs 5-minute reads.</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Audience</span><span class="comp-fact-val">Millennial women</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Tone</span><span class="comp-fact-val">Conversational, relatable</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">Gender-neutral, faster, no lifestyle fluff</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">Women-only brand</div><div class="gap-tag">15 emails/wk</div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="comp-type direct">Direct — App</div>
+        <div class="comp-name">TLDR News</div>
+        <div class="comp-tagline">"News in 3 sentences"</div>
+        <p style="font-size:13px;">Android app and YouTube channel. Ultra-compressed news summaries. Links to original sources. Zero visual polish or brand identity. Functional but forgettable — no morning ritual narrative.</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Format</span><span class="comp-fact-val">3-sentence blurbs</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Brand</span><span class="comp-fact-val">Weak / utilitarian</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">Curation quality, emotional design</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">No brand</div><div class="gap-tag">No ritual</div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="comp-type adjacent">Adjacent — Social</div>
+        <div class="comp-name">Axios</div>
+        <div class="comp-tagline">"Smart brevity"</div>
+        <p style="font-size:13px;">Invented the "Smart Brevity" format — bold lede, bullet context, one-line "why it matters." Strong app and web presence. More professional/political than lifestyle. Dense issue frequency (multiple daily sends).</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Tone</span><span class="comp-fact-val">Serious/policy</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Frequency</span><span class="comp-fact-val">Multiple daily</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">Warm, non-political, single daily hit</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">Overwhelming</div><div class="gap-tag">DC-insider feel</div>
+        </div>
+      </div>
+
+      <div class="competitor-card">
+        <div class="comp-type adjacent">Adjacent — Social</div>
+        <div class="comp-name">The Donut</div>
+        <div class="comp-tagline">"4-min daily with memes"</div>
+        <p style="font-size:13px;">Young-skewing newsletter mixing memes and hard news. 4-minute reads. Witty, irreverent. Strong on Gen Z social media. Weaker on the "why it matters to your life" framing that The Daily Catch owns.</p>
+        <div class="comp-facts">
+          <div class="comp-fact"><span class="comp-fact-label">Audience</span><span class="comp-fact-val">Gen Z / young millennials</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Tone</span><span class="comp-fact-val">Meme-heavy, funny</span></div>
+          <div class="comp-fact"><span class="comp-fact-label">Your edge</span><span class="comp-fact-val">Credibility, personal impact framing</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="gap-tag">Low credibility feel</div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="ornament">
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:16px;">Your Competitive White Space</h3>
+    <p>No major competitor simultaneously checks all four boxes: <strong>app-native format</strong>, <strong>gender-neutral audience</strong>, <strong>under-2-minute read time</strong>, and <strong>personal life-impact framing</strong>. That is The Daily Catch's defensible territory. Claim it aggressively in all messaging.</p>
+  </div>
+</section>
+
+<!-- PLATFORM ANALYSIS -->
+<section>
+  <div class="container">
+    <div class="section-label">02 — Platform Strategy</div>
+    <h2>Where to Show Up & Why</h2>
+    <p>Not all platforms are worth your attention at launch. Brands that <strong>spread thin across six platforms</strong> and execute none of them well lose to brands that dominate two. Here's the tiered recommendation based on audience fit, 2026 growth trends, and content alignment.</p>
+
+    <div class="platform-section">
+      <div class="platform-card header">
+        <div class="pc">Platform</div>
+        <div class="pc">Fit for Daily Catch</div>
+        <div class="pc">Opportunity in 2026</div>
+        <div class="pc">Verdict</div>
+      </div>
+
+      <div class="platform-card tier-1">
+        <div class="pc name"><span class="pc-icon">🎵</span> TikTok</div>
+        <div class="pc">Perfect. Short video = short news. Discovery engine for 16–34. Massive reach for zero budget with right creative.</div>
+        <div class="pc">Median brand follower count rose 200%+ YoY in 2025. Highest growth platform for new brands.</div>
+        <div class="pc"><span class="verdict go">▲ TIER 1 — LEAD HERE</span></div>
+      </div>
+
+      <div class="platform-card tier-1">
+        <div class="pc name"><span class="pc-icon">📸</span> Instagram</div>
+        <div class="pc">Reels for reach. Carousels for story breakdowns. Stories for daily "open the app" habit reinforcement.</div>
+        <div class="pc">Organic reach under pressure but still foundational. Essential for brand credibility and audience scale.</div>
+        <div class="pc"><span class="verdict go">▲ TIER 1 — CORE PLATFORM</span></div>
+      </div>
+
+      <div class="platform-card tier-2">
+        <div class="pc name"><span class="pc-icon">🎬</span> YouTube Shorts</div>
+        <div class="pc">Repurpose TikTok videos. YouTube drives 2.53B ad reach. Long-tail SEO benefit for "explain the news" queries.</div>
+        <div class="pc">Shorts extended to 3 min in late 2024. Long-form option for deeper dives as brand matures.</div>
+        <div class="pc"><span class="verdict maybe">◆ TIER 2 — REPURPOSE</span></div>
+      </div>
+
+      <div class="platform-card tier-2">
+        <div class="pc name"><span class="pc-icon">🧵</span> Threads</div>
+        <div class="pc">Natural fit: share story summaries as threads. Text-first, intellectual tone matches The Daily Catch's no-BS ethos.</div>
+        <div class="pc">Still growing. Low content saturation = easier to stand out. Integrated with Instagram for efficiency.</div>
+        <div class="pc"><span class="verdict maybe">◆ TIER 2 — TEST IT</span></div>
+      </div>
+
+      <div class="platform-card tier-2">
+        <div class="pc name"><span class="pc-icon">𝕏</span> X / Twitter</div>
+        <div class="pc">News audience is here. But brand follower growth flat-to-negative in 2025. High noise environment.</div>
+        <div class="pc">Still relevant for media/journalist outreach and PR. Less effective for organic brand building.</div>
+        <div class="pc"><span class="verdict maybe">◆ TIER 2 — PR USE ONLY</span></div>
+      </div>
+
+      <div class="platform-card tier-3">
+        <div class="pc name"><span class="pc-icon">💼</span> LinkedIn</div>
+        <div class="pc">Weak fit. B2B platform. Your audience isn't in "work mode" when they want 2-minute news. Double-digit follower growth but wrong vibe.</div>
+        <div class="pc">Could work for founder/brand story content. "Why we built The Daily Catch" narrative.</div>
+        <div class="pc"><span class="verdict skip">— TIER 3 — SKIP FOR NOW</span></div>
+      </div>
+
+      <div class="platform-card tier-3">
+        <div class="pc name"><span class="pc-icon">📌</span> Pinterest</div>
+        <div class="pc">Visual discovery platform. Poor fit for news content. Audience intent is aspirational/shopping, not information.</div>
+        <div class="pc">No meaningful opportunity for a news app in this space.</div>
+        <div class="pc"><span class="verdict skip">— TIER 3 — SKIP</span></div>
+      </div>
+
+    </div>
+
+    <p style="margin-top:24px; font-size:13px; color:var(--muted);">Note: TikTok is now deeply integrated with Google Search — your video titles and captions appear in standard web results, giving organic social content the SEO lift traditionally reserved for blog posts. Treat every TikTok caption as a search keyword.</p>
+  </div>
+</section>
+
+<!-- BRAND STRATEGY -->
+<section>
+  <div class="container">
+    <div class="section-label">03 — Brand Identity</div>
+    <h2>Who The Daily Catch Is</h2>
+
+    <div class="identity-grid">
+      <div class="identity-card dark">
+        <div class="identity-label">Brand Position</div>
+        <div class="big-text">The antidote to news anxiety.</div>
+        <p style="color:rgba(245,240,232,0.7); font-size:14px;">Not another news app. Not another newsletter. A morning ritual that leaves you feeling informed — not drained. The news you need, then you're free.</p>
+      </div>
+      <div class="identity-card">
+        <div class="identity-label">Brand Personality</div>
+        <ul class="tone-list">
+          <li><div class="tone-bullet"></div><strong>Calm confidence.</strong> We know what matters. We're not shouting.</li>
+          <li><div class="tone-bullet"></div><strong>Warm intelligence.</strong> Smart without being condescending.</li>
+          <li><div class="tone-bullet"></div><strong>Trustworthy brevity.</strong> Every word earns its place.</li>
+          <li><div class="tone-bullet"></div><strong>Life-connected.</strong> News that lands in your world, not just the headlines.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="ornament">
+
+    <h3 style="font-family:'Playfair Display',serif; font-size:22px; margin-bottom:16px;">Brand Voice Examples</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:8px;">
+      <div style="background:white; border:1px solid var(--rule); padding:24px;">
+        <div class="section-label" style="color:var(--accent2);">✓ We sound like this</div>
+        <p style="font-size:14px; margin-top:8px;">"Here's what happened with the Fed rate decision — and why it quietly changes what you'll pay for your car loan next month."</p>
+        <p style="font-size:14px;">"Five things you actually need to know today. Then go live your life."</p>
+        <p style="font-size:14px;">"The news in two minutes. No guilt if you miss a day."</p>
+      </div>
+      <div style="background:white; border:1px solid var(--rule); padding:24px;">
+        <div class="section-label" style="color:var(--accent);">✗ We never sound like this</div>
+        <p style="font-size:14px; margin-top:8px; color:var(--muted);">"BREAKING: Chaos erupts as global tensions EXPLODE — what you NEED to know RIGHT NOW"</p>
+        <p style="font-size:14px; color:var(--muted);">"This is the most important story of the decade and you can't afford to miss it."</p>
+        <p style="font-size:14px; color:var(--muted);">"Subscribe now before it's too late!"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGIC PILLARS -->
+<section>
+  <div class="container">
+    <div class="section-label">04 — Brand Strategy</div>
+    <h2>Six Growth Pillars</h2>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">1</div>
+        <h3>Own "2 Minutes"</h3>
+        <p>Make the 2-minute read a proprietary brand asset. Every piece of content — social, ads, PR — quantifies the time. "Your morning news in 2 minutes" should be as recognizable as a tagline can be.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">2</div>
+        <h3>The "Why It Matters" Hook</h3>
+        <p>Competitors report what happened. You explain <em>why it affects your life</em>. This is the emotional differentiation. Every social post should demonstrate this with a specific example.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">3</div>
+        <h3>Anti-Doomscroll Positioning</h3>
+        <p>News fatigue is a universal feeling in 2026. Actively contrast with the anxiety of traditional news apps. "No algorithm trying to keep you scrolling" is a powerful differentiator — say it often.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">4</div>
+        <h3>Morning Ritual Identity</h3>
+        <p>Compete with coffee, not with CNN. The Daily Catch is a habit, not a news source. Build content that ritualizes it: "what I do before my first meeting," "my 2-minute morning routine."</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">5</div>
+        <h3>Creator Partnerships</h3>
+        <p>Partner with productivity, wellness, and lifestyle creators — not media personalities. Your audience follows people who help them live better. Infiltrate that space: "how I stay informed in 2 minutes."</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">6</div>
+        <h3>Community & FOMO Loop</h3>
+        <p>Build a social layer: "Today's 5 stories — which one surprised you?" Engagement creates FOMO in non-users. Sharing stories drives organic installs more than any paid campaign.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT PLAYBOOK -->
+<section>
+  <div class="container">
+    <div class="section-label">05 — Content Playbook</div>
+    <h2>What to Actually Post</h2>
+    <p>Each platform gets a distinct content engine — not the same post resized. Platform-native content is the difference between 200% follower growth and getting ignored.</p>
+
+    <div style="margin-top:32px;">
+
+      <div class="playbook-item">
+        <div class="pb-platform">
+          <div class="pb-icon">🎵</div>
+          TikTok
+        </div>
+        <div class="pb-content">
+          <h4>"60-Second Explainer" Series</h4>
+          <p>Daily hook video: "Here's the one story everyone is talking about and why it actually matters for you." Raw-feeling, direct-to-camera or text-on-screen. Open with the payoff, not the setup. Use the word "you" constantly. Post daily at 7–9am. Treat captions as SEO keywords for Google indexing.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">Daily posting</span>
+            <span class="pb-tag">Direct-to-camera</span>
+            <span class="pb-tag">Hook in 3 seconds</span>
+            <span class="pb-tag">SEO captions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="playbook-item">
+        <div class="pb-platform">
+          <div class="pb-icon">📸</div>
+          Instagram
+        </div>
+        <div class="pb-content">
+          <h4>Carousel "Story Cards" + Reels</h4>
+          <p>Carousels: slide 1 = what happened, slide 2 = why it matters, slide 3 = how it affects you. Clean, typographic design with The Daily Catch aesthetic. Reels = repurposed TikTok. Stories daily: "Today's 5 stories — open the app." Use Stories to drive installs with a single tap link.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">Carousel daily</span>
+            <span class="pb-tag">Story-driven Reels</span>
+            <span class="pb-tag">Stories → app install CTA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="playbook-item">
+        <div class="pb-platform">
+          <div class="pb-icon">🧵</div>
+          Threads
+        </div>
+        <div class="pb-content">
+          <h4>Story Thread Breakdowns</h4>
+          <p>Take one of the day's 5 stories and break it into a 4-tweet thread: Post 1 = what happened (1 sentence). Post 2 = context. Post 3 = why it matters to you. Post 4 = "We covered this + 4 more in The Daily Catch. Link in bio." Low effort, high alignment with the app's format.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">Text-native</span>
+            <span class="pb-tag">4-post thread</span>
+            <span class="pb-tag">Daily or every-other-day</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="playbook-item">
+        <div class="pb-platform">
+          <div class="pb-icon">🎬</div>
+          YouTube
+        </div>
+        <div class="pb-content">
+          <h4>Shorts Repurpose + Weekly "5 Stories" Roundup</h4>
+          <p>Immediately repurpose TikTok as Shorts for additional indexed visibility. Once you have bandwidth: a weekly 5-minute "The Week's Most Important Stories" long-form video. This builds trust, search presence, and gives you a different content dimension from your daily format.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">Shorts: daily repurpose</span>
+            <span class="pb-tag">Long-form: weekly</span>
+            <span class="pb-tag">SEO-optimized titles</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="playbook-item">
+        <div class="pb-platform">
+          <div class="pb-icon">𝕏</div>
+          X / Twitter
+        </div>
+        <div class="pb-content">
+          <h4>PR & Journalist Outreach Only</h4>
+          <p>Don't invest organic content effort here. Use X primarily for: engaging with journalists who cover your stories, announcing press coverage, and monitoring news trends for editorial decisions. Brand growth on X is flat. Your energy is better spent on TikTok and Instagram.</p>
+          <div class="pb-tags">
+            <span class="pb-tag">Reactive only</span>
+            <span class="pb-tag">Press mentions</span>
+            <span class="pb-tag">No original content</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH ROADMAP -->
+<section>
+  <div class="container">
+    <div class="section-label">06 — Launch Roadmap</div>
+    <h2>First 90 Days</h2>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item">
+        <div class="roadmap-period">Month 1<br>Weeks 1–4</div>
+        <div class="roadmap-body">
+          <h4>Foundation & Identity</h4>
+          <ul>
+            <li>Lock brand voice guide and visual system (colors, fonts, templates)</li>
+            <li>Create TikTok and Instagram accounts — optimize bios with keywords</li>
+            <li>Build 10–15 posts in advance before going live (content buffer)</li>
+            <li>Identify 5–10 micro-creators in productivity/wellness/lifestyle niches to approach</li>
+            <li>Set up Threads account; begin daily story threads</li>
+            <li>Launch daily TikTok posting at 7–9am local time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-period">Month 2<br>Weeks 5–8</div>
+        <div class="roadmap-body">
+          <h4>Audience Building & First Partnerships</h4>
+          <ul>
+            <li>Activate first 2–3 creator partnerships (gifted placements, no cash needed at this stage)</li>
+            <li>Begin YouTube Shorts repurposing from TikTok (5 minutes additional effort per day)</li>
+            <li>A/B test two TikTok formats: talking head vs. text-on-screen</li>
+            <li>Launch a recurring series: "The Story Behind the Story" — weekly deeper dive</li>
+            <li>Send 3 press pitches to tech/app newsletters and productivity media</li>
+            <li>Engage actively in comments — answer questions, pin best comments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-period">Month 3<br>Weeks 9–12</div>
+        <div class="roadmap-body">
+          <h4>Optimize & Scale What Works</h4>
+          <ul>
+            <li>Analyze top-performing content: double down on winning format</li>
+            <li>Run first paid Meta/TikTok campaign using best-performing organic creative</li>
+            <li>Launch community engagement moment: "Which of today's 5 stories hit different?"</li>
+            <li>Approach second-tier creator partnerships with proof-of-concept metrics</li>
+            <li>Begin weekly YouTube long-form if bandwidth allows</li>
+            <li>Target first press feature in a mainstream outlet via journalist relationships on X</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section>
+  <div class="container">
+    <div class="section-label">07 — Success Metrics</div>
+    <h2>How to Measure What Matters</h2>
+    <p>Track platform metrics weekly but evaluate strategy monthly. Vanity metrics (follower count) matter less than conversion metrics (installs, DAU, D7 retention). Focus on the funnel.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-icon">📲</div>
+        <div class="kpi-label">TikTok Followers</div>
+        <div class="kpi-target">5K</div>
+        <div class="kpi-note">End of Month 1</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-icon">📸</div>
+        <div class="kpi-label">Instagram Reach</div>
+        <div class="kpi-target">50K</div>
+        <div class="kpi-note">Per month by Day 60</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-icon">⬇️</div>
+        <div class="kpi-label">App Installs</div>
+        <div class="kpi-target">1,000</div>
+        <div class="kpi-note">First 30 days organic</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-icon">🔁</div>
+        <div class="kpi-label">D7 Retention</div>
+        <div class="kpi-target">&gt;30%</div>
+        <div class="kpi-note">Target benchmark</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-icon">💬</div>
+        <div class="kpi-label">Engagement Rate</div>
+        <div class="kpi-target">&gt;5%</div>
+        <div class="kpi-note">TikTok / Instagram</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-icon">🌟</div>
+        <div class="kpi-label">Creator Deals</div>
+        <div class="kpi-target">5+</div>
+        <div class="kpi-note">By end of Month 3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL THOUGHT -->
+<section style="background:var(--ink); color:var(--paper);">
+  <div class="container" style="text-align:center; padding-top:80px; padding-bottom:80px;">
+    <div class="section-label" style="color:var(--gold);">Final Thought</div>
+    <h2 style="color:var(--paper); font-size:clamp(28px,5vw,52px); max-width:680px; margin:0 auto 24px;">The biggest competitor isn't Morning Brew. It's the habit of not reading the news at all.</h2>
+    <p style="max-width:520px; margin:0 auto; color:rgba(245,240,232,0.6); font-size:16px;">Win that battle — make The Daily Catch feel like a small, guilt-free gift each morning — and the brand will grow itself.</p>
+  </div>
+</section>
+
+<footer>
+  <div>THE DAILY CATCH — BRAND STRATEGY · APRIL 2026 · CONFIDENTIAL</div>
+</footer>
+
+</body>
+</html>
